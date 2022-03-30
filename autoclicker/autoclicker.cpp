@@ -1,4 +1,5 @@
-﻿// BIBLIOTEKI
+// Auto Clicker by Grzybyyyyy
+// BIBLIOTEKI
 #include <iostream>
 #include <windows.h>
 #include <conio.h> 
