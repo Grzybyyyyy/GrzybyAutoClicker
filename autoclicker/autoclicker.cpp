@@ -1,4 +1,3 @@
-// Auto Clicker by Grzybyyyyy
 // BIBLIOTEKI
 #include <iostream>
 #include <windows.h>
@@ -7,14 +6,14 @@
 using namespace std;
 
 // ZMIENNE
-int x, y, mode, mcps, cps;
-bool MV = true, TM = false, blc = true, brc = true, LC = false, RC = false, debugmode = false, NB = true, darkmode = false;
+int x, y, mode, mlcps, lcps, mrcps, rcps;
+bool MV = true, TM = false, blc = true, brc = true, LC = false, RC = false, betamode = false, NB = true, darkmode = false;
 
 static void td()
 {
     cout << "#   ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
-    cout << "<Debug Mode>";
+    cout << " <BetaMode> ";
     if (darkmode)
     {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
@@ -41,25 +40,41 @@ static void menu()
     // MENU GLOWNE
     cout << "####################" << endl;
     cout << "#A.C. BY GRZYBYYYYY#" << endl;
-    if (debugmode)
+    if (betamode)
     {
         td();
-        if (mcps <= 99)
+        if (mlcps <= 99)
         {
-            cout << "# Millisecond = " << mcps << " #" << endl;
+            cout << "# LMillisecond= " << mlcps << " #" << endl;
         }
         else
         {
-            cout << "# Millisecond = " << mcps << "#" << endl;
+            cout << "# LMillisecond= " << mlcps << "#" << endl;
+        }
+        if (mrcps <= 99)
+        {
+            cout << "# RMillisecond= " << mrcps << " #" << endl;
+        }
+        else
+        {
+            cout << "# RMillisecond= " << mrcps << "#" << endl;
         }
     }
-    if (cps >= 10)
+    if (lcps >= 10)
     {
-        cout << "#     CPS = " << cps << "     #" << endl;
+        cout << "#   L.CPS = " << lcps << "     #" << endl;
     }
     else
     {
-        cout << "#     CPS = " << cps << "      #" << endl;
+        cout << "#   L.CPS = " << lcps << "      #" << endl;
+    }
+    if (rcps >= 10)
+    {
+        cout << "#   R.CPS = " << rcps << "     #" << endl;
+    }
+    else
+    {
+        cout << "#   R.CPS = " << rcps << "      #" << endl;
     }
     cout << "#  Toggle Mode = " << TM << " #" << endl;
     cout << "####################" << endl;
@@ -147,18 +162,29 @@ static void bind()
 
 static void scps()
 {
-    cout << "Podaj liczbe CPS: "; cin >> cps;
+    cout << "Podaj liczbe L. CPS: "; cin >> lcps;
+    cout << "Podaj liczbe R. CPS: "; cin >> rcps;
     // OBLICZANIE CPS
-    if ((cps >= 1) && (cps <= 40))
+    if ((lcps >= 1) && (lcps <= 40) && (rcps >= 1) && (rcps <= 40))
     {
-        if ((cps >= 1) && (cps <= 32))
+        if ((lcps >= 1) && (lcps <= 32))
         {
-            mcps = (1000 / cps) - 5;
+            mlcps = (1000 / lcps) - 5;
         }
-        if ((cps >= 33) && (cps <= 40))
+        if ((lcps >= 33) && (lcps <= 40))
         {
-            mcps = (1000 / cps) - 10;
+            mlcps = (1000 / lcps) - 10;
         }
+
+        if ((rcps >= 1) && (rcps <= 32))
+        {
+            mrcps = (1000 / rcps) - 5;
+        }
+        if ((rcps >= 33) && (rcps <= 40))
+        {
+            mrcps = (1000 / rcps) - 10;
+        }
+
     }
     else
     {
@@ -172,7 +198,7 @@ static void config()
     // MENU CONFIGU
     system("cls");
     ShowWindow(GetConsoleWindow(), SW_SHOW);
-    if (debugmode)
+    if (betamode)
     {
         cout << "####################" << endl;
         cout << "#A.C. BY GRZYBYYYYY#" << endl;
@@ -181,11 +207,11 @@ static void config()
         cout << "####################" << endl;
         cout << "#[1]# BIND L.CLICK #" << endl;
         cout << "#[2]# BIND R.CLICK #" << endl;
-        cout << "#[3]# Toggle mode  #" << endl;
-        cout << "#[4]#   SET CPS    #" << endl;
-        cout << "#[5]#  SET 65 CPS  #" << endl;
-        cout << "#[6]#  Debug Mode  #" << endl;
-        cout << "#[7]#  Dark  Mode  #" << endl;
+        cout << "#[3]# SET CPS      #" << endl;
+        cout << "#[4]# SET 65 CPS   #" << endl;
+        cout << "#[5]# Toggle mode  #" << endl;
+        cout << "#[6]# Dark Mode    #" << endl;
+        cout << "#[7]# Beta Mode    #" << endl;
         cout << "#[8]#     BACK     #" << endl;
         cout << "####################" << endl;
         cout << "Wybiesz opcje (1-8): "; cin >> mode;
@@ -202,33 +228,34 @@ static void config()
             bind();
             Sleep(300);
             break;
-        case 3:
+        case 5:
             TM = !TM;
-            Sleep(300);
             break;
-        case 4:
+        case 3:
             scps();
             Sleep(300);
             break;
-        case 5:
-            cps = 65;
-            mcps = 12;
+        case 4:
+            lcps = 65;
+            mlcps = 12;
+            rcps = 65;
+            mrcps = 12;
             Sleep(300);
             break;
-        case 6:
-            if (!debugmode)
+        case 7:
+            if (!betamode)
             {
-                debugmode = !debugmode;
+                betamode = !betamode;
             }
             else
             {
-                debugmode = !debugmode;
+                betamode = !betamode;
                 system("cls");
                 system("color f");
                 scps();
             }
             break;
-        case 7:
+        case 6:
             darkmode = !darkmode;
             break;
         case 8:
@@ -243,10 +270,10 @@ static void config()
         cout << "#A.C. BY GRZYBYYYYY#" << endl;
         cout << "#      CONFIG      #" << endl;
         cout << "####################" << endl;
-        cout << "#[1]# Toggle mode  #" << endl;
-        cout << "#[2]#   SET CPS    #" << endl;
-        cout << "#[3]#  Debug Mode  #" << endl;
-        cout << "#[4]#  Dark  Mode  #" << endl;
+        cout << "#[1]# SET CPS      #" << endl;
+        cout << "#[2]# Toggle Mode  #" << endl;
+        cout << "#[3]# Dark Mode    #" << endl;
+        cout << "#[4]# Beta Mode    #" << endl;
         cout << "#[5]#     BACK     #" << endl;
         cout << "####################" << endl;
         cout << "Wybiesz opcje (1-5): "; cin >> mode;
@@ -254,27 +281,26 @@ static void config()
         switch (mode)
         {
         case 1:
-            TM = !TM;
-            Sleep(300);
-            break;
-        case 2:
             scps();
             Sleep(300);
             break;
-        case 3:
-            if (!debugmode)
+        case 2:
+                TM = !TM;
+            break;
+        case 4:
+            if (!betamode)
             {
-                debugmode = !debugmode;
+                betamode = !betamode;
             }
             else
             {
-                debugmode = !debugmode;
+                betamode = !betamode;
                 system("cls");
                 system("color f");
                 scps();
             }
             break;
-        case 4:
+        case 3:
             darkmode = !darkmode;
             break;
         case 5:
@@ -328,30 +354,31 @@ int main()
         {
             mouse_event(MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
-            Sleep(mcps);
+            Sleep(mlcps);
         }
         if ((GetAsyncKeyState(VK_NUMPAD5)) && (!blc) && (!TM))
         {
             mouse_event(MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
-            Sleep(mcps);
+            Sleep(mlcps);
         }
         // RIGHT BUTTON
         if ((GetAsyncKeyState(VK_XBUTTON1)) && (brc) && (!TM))
         {
             mouse_event(MOUSEEVENTF_RIGHTDOWN, x, y, 0, 0);
             mouse_event(MOUSEEVENTF_RIGHTUP, x, y, 0, 0);
-            Sleep(mcps);
+            Sleep(mrcps);
         }
         if ((GetAsyncKeyState(VK_NUMPAD4)) && (!brc) && (!TM))
         {
             mouse_event(MOUSEEVENTF_RIGHTDOWN, x, y, 0, 0);
             mouse_event(MOUSEEVENTF_RIGHTUP, x, y, 0, 0);
-            Sleep(mcps);
+            Sleep(mrcps);
         }
+       
         // TOGGLE ON
         // LEFT BUTTON
-        if ((TM) && (GetAsyncKeyState(VK_XBUTTON2)) || (GetAsyncKeyState(VK_NUMPAD5)))
+        if ((TM) && (GetAsyncKeyState(VK_XBUTTON2)))
         {
             LC = !LC;
             menu();
@@ -359,13 +386,7 @@ int main()
         }
         if ((TM) && (LC))
         {
-            if (GetAsyncKeyState(VK_XBUTTON2))
-            {
-                LC = !LC;
-                menu();
-                Sleep(300);
-            }
-            Sleep(mcps); 
+            Sleep(mlcps); 
             mouse_event(MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
         }
@@ -378,15 +399,10 @@ int main()
         }
         if ((TM) && (RC))
         {
-            if (GetAsyncKeyState(VK_XBUTTON1))
-            {
-                RC = !RC;
-                menu();
-                Sleep(300);
-            }
-            Sleep(mcps);
+            Sleep(mrcps);
             mouse_event(MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
         }
+        
     }
 }
