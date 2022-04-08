@@ -1,3 +1,4 @@
+// AutoClicker By Grzybyyyyy
 // BIBLIOTEKI
 #include <iostream>
 #include <windows.h>
@@ -229,7 +230,9 @@ static void config()
             Sleep(300);
             break;
         case 5:
+            //cout << "Toggle mode jest obecnie niedostepny z powodu bagow :(";
             TM = !TM;
+            //getchar(); getchar();
             break;
         case 3:
             scps();
@@ -285,7 +288,9 @@ static void config()
             Sleep(300);
             break;
         case 2:
+            //cout << "Toggle mode jest obecnie niedostepny z powodu bagow :(";
                 TM = !TM;
+            //getchar(); getchar();
             break;
         case 4:
             if (!betamode)
